@@ -25,10 +25,17 @@ from openspace.storscale_config import (
 # Paths
 # ---------------------------------------------------------------------------
 
+# Default assumes OpenSpace and storscale-agents are siblings (e.g. cloned
+# under the same parent directory). The storscale-agents repo is a monorepo
+# whose agent runtime package is itself named `storscale-agents`, hence the
+# doubled path segment. Override with the AGENTS_ROOT env var when deploying.
 AGENTS_ROOT: Path = (
     Path(os.environ["AGENTS_ROOT"])
     if "AGENTS_ROOT" in os.environ
-    else Path(__file__).resolve().parent.parent / "storscale-agents" / "agents"
+    else Path(__file__).resolve().parent.parent.parent
+    / "storscale-agents"
+    / "storscale-agents"
+    / "agents"
 )
 
 # ---------------------------------------------------------------------------
